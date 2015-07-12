@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe ObjectFlatten do
-  subject { ObjectFlatten.flatten(obj, sep) }
+  subject { ObjectFlatten.flatten(obj, options) }
 
   let(:obj) { described_class }
-  let(:sep) { '.' }
+  let(:options) { {} }
 
   context({}) do
     it do
@@ -48,12 +48,23 @@ describe ObjectFlatten do
   end
 
   context("foo"=>{"bar1"=>"zoo", "bar2"=>"baz"}) do
-    let(:sep) { '/' }
+    let(:options) { {separator: '/'} }
 
     it do
       is_expected.to eq [
         {"foo/bar1"=>"zoo"},
         {"foo/bar2"=>"baz"}
+      ]
+    end
+  end
+
+  context("f oo"=>{"b-ar1"=>"z o o", "b ar2"=>"b a z"}) do
+    let(:options) { {tr: [' -', '__']} }
+
+    it do
+      is_expected.to eq [
+        {"f_oo.b_ar1"=>"z o o"},
+        {"f_oo.b_ar2"=>"b a z"}
       ]
     end
   end

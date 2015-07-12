@@ -42,10 +42,15 @@ ObjectFlatten.flatten({"foo"=>{"bar1"=>"zoo", "bar2"=>"baz"}})
 #     {"foo.bar2"=>"baz"}
 #   ]
 
-ObjectFlatten.flatten({"foo"=>{"bar1"=>"zoo", "bar2"=>"baz"}}, '/')
+ObjectFlatten.flatten({"foo"=>{"bar1"=>"zoo", "bar2"=>"baz"}}, separator: '/')
 #=> [
 #     {"foo/bar1"=>"zoo"},
 #     {"foo/bar2"=>"baz"}
+#   ]
+
+ObjectFlatten.flatten({"foo bar"=>{"zoo"=>"baz"}}, tr: [' ', '_'])
+#=> [
+#     {"foo_bar.zoo"=>"baz"}
 #   ]
 
 ObjectFlatten.flatten({
